@@ -12,7 +12,7 @@ var Helper = {};
 Helper.url = function (path) {
   var filepath = path;
   if (path instanceof Array) { filepath = path.join('/'); }
-  return 'file://' + __dirname + '/' + filename;
+  return 'file://' + __dirname + '/' + filepath;
 };
 
 // ---------------------------------------------------------
