@@ -30,3 +30,6 @@ node_modules
 # https://github.com/craftpaperbag/cub.git
 .cub
 cub
+
+# ignore built apps
+Built
