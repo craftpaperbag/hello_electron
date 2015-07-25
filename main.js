@@ -3,6 +3,7 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
 var Tray = require('tray');
+var Menu = require('menu');
 
 require('crash-reporter').start();
 
@@ -41,6 +42,20 @@ app.on('ready', function (){
   // show icon
   var appIcon = new Tray(__dirname + '/images/icon.png');
 
+  // メニュー追加
+  var contextMenu = Menu.buildFromTemplate([
+    {label: 'りんご', type: 'radio'},
+    {label: 'ゴリラ', type: 'radio'},
+    {type: 'separator'},
+    {label: '朝ごはん', submenu: [
+      {label: 'のむヨーグルト'},
+      {label: 'サーターアンダギー'}
+      ]},
+    {label: '終了', accelerator: 'Command+Q', click: function () { app.quit(); }}
+  ]);
+  appIcon.setContextMenu(contextMenu);
+  // マウスオーバーすると
+  appIcon.setToolTip('this is sample');
 
   mainWindow.on('closed', function () {
     console.log('main window closed :(');
