@@ -2,6 +2,7 @@
 
 var app = require('app');
 var BrowserWindow = require('browser-window');
+var Tray = require('tray');
 
 require('crash-reporter').start();
 
@@ -30,8 +31,16 @@ app.on('window-all-closed', function () {
 
 
 app.on('ready', function (){
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    // transparent: true,
+    frame: false
+  });
   mainWindow.loadUrl(Helper.url('index.html'));
+  // show icon
+  var appIcon = new Tray(__dirname + '/images/icon.png');
+
 
   mainWindow.on('closed', function () {
     console.log('main window closed :(');
