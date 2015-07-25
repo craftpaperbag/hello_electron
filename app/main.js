@@ -45,7 +45,7 @@ var menu = Menu.buildFromTemplate([
     label: 'Hello Electron',
     submenu: [
       {label: 'About'},
-      {label: 'Quit'}
+      {label: 'Quit', accelerator: 'Command+Q', click: function () { app.quit(); }}
     ]
   },
   {
@@ -88,7 +88,6 @@ app.on('ready', function (){
       {label: 'のむヨーグルト'},
       {label: 'サーターアンダギー'}
       ]},
-    {label: '終了', accelerator: 'Command+Q', click: function () { app.quit(); }}
   ]);
   appIcon.setContextMenu(contextMenu);
   // マウスオーバーすると
@@ -98,4 +97,7 @@ app.on('ready', function (){
     console.log('main window closed :(');
     mainWindow = null;
   });
+});
+
+app.on('will-quit', function () {
 });
