@@ -11,10 +11,16 @@ require('crash-reporter').start();
 // original helper
 var Helper = {};
 
-Helper.url = function (path) {
+Helper.url = function (path, onlyPath) {
   var filepath = path;
   if (path instanceof Array) { filepath = path.join('/'); }
+
+  if (onlyPath) { return __dirname + '/' + filepath; }
   return 'file://' + __dirname + '/' + filepath;
+};
+
+Helper.filepath = function (path) {
+  return Helper.url(path, true);
 };
 
 // ---------------------------------------------------------
@@ -31,7 +37,38 @@ app.on('window-all-closed', function () {
 });
 
 
+// ---------------------------------------------------------
+
+// menu
+var menu = Menu.buildFromTemplate([
+  {
+    label: 'Hello Electron',
+    submenu: [
+      {label: 'About'},
+      {label: 'Quit'}
+    ]
+  },
+  {
+    label: 'File',
+    submenu: [
+      {label: 'New File'},
+      {label: 'Paste'}
+    ]
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      {label: 'Copy', accelerator: 'Command+C', selector: 'copy'},
+      {label: 'Paste', accelerator: 'Command+C', selector: 'paste'},
+    ]
+  }
+]);
+
+
 app.on('ready', function (){
+
+  Menu.setApplicationMenu(menu);
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -40,7 +77,7 @@ app.on('ready', function (){
   });
   mainWindow.loadUrl(Helper.url('index.html'));
   // show icon
-  var appIcon = new Tray(__dirname + '/images/icon.png');
+  var appIcon = new Tray(Helper.filepath(['images','icon.png']));
 
   // メニュー追加
   var contextMenu = Menu.buildFromTemplate([
